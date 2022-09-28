@@ -1,0 +1,51 @@
+---
+# yamllint disable rule:truthy
+name: Test action
+on:
+  pull_request:
+    paths:
+      - .github/workflows/test.yaml
+      - action.yaml
+
+
+jobs:
+
+  jfrog-setup-internal-auth:
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b  # tag=v3.0.2
+      - name: exec jfrog-setup
+        id: actual
+        uses: ./
+        with:
+          vaultUrl: https://vault.staging.sonar.build:8200
+          artifactoryRoleSuffix: test
+      - name: validate
+        shell: bash
+        run: jfrog rt ping
+
+  jfrog-setup-external-auth:
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b  # tag=v3.0.2
+      - name: get secrets
+        id: secrets
+        uses: SonarSource/vault-action-wrapper@d1c1ab4ca5ad07fd9cdfe1eff038a39673dfca64  # tag=2.4.2-1
+        with:
+          url: https://vault.staging.sonar.build:8200
+          secrets: |
+            development/artifactory/token/{REPO_OWNER_NAME_DASH}-test access_token | jf_access_token;
+      - name: exec jfrog-setup
+        id: actual
+        uses: ./
+        with:
+          jfrogAccessToken: ${{ fromJSON(steps.secrets.outputs.vault).jf_access_token }}
+      - name: validate
+        shell: bash
+        run: jfrog rt ping
