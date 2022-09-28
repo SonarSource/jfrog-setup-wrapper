@@ -1,0 +1,45 @@
+---
+name: Wrapper for jfrog/setup-jfrog-cli
+author: Malena Ebert
+description: Setup authenticated JF cli
+branding:
+  color: green
+  icon: lock
+inputs:
+  jfrogUrl:
+    description: url of the artifactory instance
+    default: https://repox.jfrog.io/
+    required: false
+  jfrogAccessToken:
+    description: access token for authentication
+    required: false
+  jfrogCliVersion:
+    description: version of the jfrog cli tool
+    default: latest
+    required: false
+  vaultUrl:
+    description: url of vault, if fetching a token is required
+    default: https://vault.sonar.build:8200
+    required: false
+  artifactoryRoleSuffix:
+    description: artifactory reader suffix specified in vault repo config
+    default: private-reader
+    required: false
+runs:
+  using: composite
+  steps:
+    - name: Fetch access token
+      id: secrets
+      if: ${{ !(inputs.jfrogAccessToken) }}
+      uses: SonarSource/gh-action_release/vault-action@${{ github.action_ref }}s
+      with:
+        url: ${{ inputs.vaultUrl }}
+        secrets: |
+          development/artifactory/token/REPO_OWNER_NAME_DASH-${{ inputs.artifactoryRoleSuffix }} access_token | artifactory_access_token;
+    - name: Setup JFrog CLI
+      uses: jfrog/setup-jfrog-cli@11ee3f9bb82595485cb55670e4f93885080e183b # tag=v2.4.1
+      with:
+        version: ${{ inputs.jfrogCliVersion }}
+      env:
+        JF_URL: ${{ inputs.jfrogUrl }}
+        JF_ACCESS_TOKEN: ${{ inputs.jfrogAccessToken || fromJSON(steps.secrets.outputs.vault).artifactory_access_token }}
