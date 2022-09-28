@@ -31,11 +31,11 @@ runs:
     - name: Fetch access token
       id: secrets
       if: ${{ !(inputs.jfrogAccessToken) }}
-      uses: SonarSource/gh-action_release/vault-action@${{ github.action_ref }}s
+      uses: SonarSource/vault-action-wrapper@d1c1ab4ca5ad07fd9cdfe1eff038a39673dfca64  # tag=2.4.2-1
       with:
         url: ${{ inputs.vaultUrl }}
         secrets: |
-          development/artifactory/token/REPO_OWNER_NAME_DASH-${{ inputs.artifactoryRoleSuffix }} access_token | artifactory_access_token;
+          development/artifactory/token/{REPO_OWNER_NAME_DASH}-${{ inputs.artifactoryRoleSuffix }} access_token | artifactory_access_token;
     - name: Setup JFrog CLI
       uses: jfrog/setup-jfrog-cli@11ee3f9bb82595485cb55670e4f93885080e183b # tag=v2.4.1
       with:
