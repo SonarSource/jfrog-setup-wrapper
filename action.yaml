@@ -31,7 +31,7 @@ runs:
     - name: Fetch access token
       id: secrets
       if: ${{ !(inputs.jfrogAccessToken) }}
-      uses: SonarSource/vault-action-wrapper@d1c1ab4ca5ad07fd9cdfe1eff038a39673dfca64  # tag=2.4.2-1
+      uses: SonarSource/vault-action-wrapper@7461acdbede91679c5c890485f565c80ef74583e # tag=2.4.3-1
       with:
         url: ${{ inputs.vaultUrl }}
         secrets: |
