@@ -37,7 +37,7 @@ runs:
         secrets: |
           development/artifactory/token/{REPO_OWNER_NAME_DASH}-${{ inputs.artifactoryRoleSuffix }} access_token | artifactory_access_token;
     - name: Setup JFrog CLI
-      uses: jfrog/setup-jfrog-cli@d0a59b1cdaeeb16e65b5039fc92b8507337f1559 # tag=v3.0.0
+      uses: jfrog/setup-jfrog-cli@b767cc787302189426594d8036046e7dce4a30c4 # v3.2.0
       with:
         version: ${{ inputs.jfrogCliVersion }}
       env:
