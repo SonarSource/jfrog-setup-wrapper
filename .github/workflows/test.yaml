@@ -16,7 +16,7 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
       - name: exec jfrog-setup
         id: actual
         uses: ./
@@ -33,7 +33,7 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
       - name: get secrets
         id: secrets
         uses: SonarSource/vault-action-wrapper@7461acdbede91679c5c890485f565c80ef74583e # tag=2.4.3-1
