@@ -25,13 +25,17 @@ inputs:
     description: artifactory reader suffix specified in vault repo config
     default: private-reader
     required: false
+  disableAutoBuildPublish:
+    description: disable auto build publish
+    default: true
+    required: false
 runs:
   using: composite
   steps:
     - name: Fetch access token
       id: secrets
       if: ${{ !(inputs.jfrogAccessToken) }}
-      uses: SonarSource/vault-action-wrapper@7461acdbede91679c5c890485f565c80ef74583e # tag=2.4.3-1
+      uses: SonarSource/vault-action-wrapper@d6d745ffdbc82b040df839b903bc33b5592cd6b0 # 3.0.2
       with:
         url: ${{ inputs.vaultUrl }}
         secrets: |
@@ -40,6 +44,7 @@ runs:
       uses: jfrog/setup-jfrog-cli@f748a0599171a192a2668afee8d0497f7c1069df # v4.5.6
       with:
         version: ${{ inputs.jfrogCliVersion }}
+        disable-auto-build-publish: ${{ inputs.disableAutoBuildPublish }}
       env:
         JF_URL: ${{ inputs.jfrogUrl }}
         JF_ACCESS_TOKEN: ${{ inputs.jfrogAccessToken || fromJSON(steps.secrets.outputs.vault).artifactory_access_token }}
