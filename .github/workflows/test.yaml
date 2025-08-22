@@ -11,7 +11,7 @@ on:
 jobs:
 
   jfrog-setup-internal-auth:
-    runs-on: ubuntu-24.04-large
+    runs-on: github-ubuntu-latest-s
     permissions:
       id-token: write
       contents: read
@@ -28,7 +28,7 @@ jobs:
         run: jfrog rt ping
 
   jfrog-setup-external-auth:
-    runs-on: ubuntu-24.04-large
+    runs-on: github-ubuntu-latest-s
     permissions:
       id-token: write
       contents: read
