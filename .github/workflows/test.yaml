@@ -11,7 +11,7 @@ on:
 jobs:
 
   jfrog-setup-internal-auth:
-    runs-on: github-ubuntu-latest-s
+    runs-on: warp-custom-ubuntu-24-04
     permissions:
       id-token: write
       contents: read
@@ -28,7 +28,7 @@ jobs:
         run: jfrog rt ping
 
   jfrog-setup-external-auth:
-    runs-on: github-ubuntu-latest-s
+    runs-on: warp-custom-ubuntu-24-04
     permissions:
       id-token: write
       contents: read
