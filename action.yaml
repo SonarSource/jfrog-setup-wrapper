@@ -35,13 +35,13 @@ runs:
     - name: Fetch access token
       id: secrets
       if: ${{ !(inputs.jfrogAccessToken) }}
-      uses: SonarSource/vault-action-wrapper@d6d745ffdbc82b040df839b903bc33b5592cd6b0 # 3.0.2
+      uses: SonarSource/vault-action-wrapper@c154b4a417b51cb98dd71137f49bf20e77c56820 # 3.4.0
       with:
         url: ${{ inputs.vaultUrl }}
         secrets: |
           development/artifactory/token/{REPO_OWNER_NAME_DASH}-${{ inputs.artifactoryRoleSuffix }} access_token | artifactory_access_token;
     - name: Setup JFrog CLI
-      uses: jfrog/setup-jfrog-cli@ff5cb544114ffc152db9cea1cd3d5978d5074946 # v4.5.11
+      uses: jfrog/setup-jfrog-cli@1641575d87647fb969c0545f0b6a76873e328b7c # v5.0.0
       with:
         version: ${{ inputs.jfrogCliVersion }}
         disable-auto-build-publish: ${{ inputs.disableAutoBuildPublish }}
