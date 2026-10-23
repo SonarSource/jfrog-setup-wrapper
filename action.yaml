@@ -1,5 +1,5 @@
 ---
-name: Wrapper for jfrog/setup-jfrog-cli
+name: Wrapper for step-security/setup-jfrog-cli
 author: Malena Ebert
 description: Setup authenticated JF cli
 branding:
@@ -41,7 +41,7 @@ runs:
         secrets: |
           development/artifactory/token/{REPO_OWNER_NAME_DASH}-${{ inputs.artifactoryRoleSuffix }} access_token | artifactory_access_token;
     - name: Setup JFrog CLI
-      uses: jfrog/setup-jfrog-cli@1641575d87647fb969c0545f0b6a76873e328b7c # v5.0.0
+      uses: step-security/setup-jfrog-cli@f67dd6dcfe5fab8d1ebd695c456631275009a39d # v5.2.0
       with:
         version: ${{ inputs.jfrogCliVersion }}
         disable-auto-build-publish: ${{ inputs.disableAutoBuildPublish }}

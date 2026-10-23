@@ -1,6 +1,6 @@
 # jfrog-setup-wrapper
 
-ease the usage of jfrog/jfrog-setup within Sonar.
+ease the usage of step-security/setup-jfrog-cli within Sonar.
 
 ## usage
 
